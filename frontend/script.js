@@ -25,16 +25,22 @@ setInterval(async () => {
 }, 5000);
 
 function renderResults(data) {
-  resultsDiv.innerHTML = '';
-  data.forEach(item => {
-    const div = document.createElement('div');
-    div.classList.add('result');
-    const statusClass = item.up ? 'status-up' : 'status-down';
-    div.innerHTML = `
-      <div><strong>${item.url}</strong></div>
-      <div>Latency: ${item.latency.toFixed(2)} ms</div>
-      <div>Status: <span class="${statusClass}">${item.up ? 'UP' : 'DOWN'}</span></div>
-    `;
-    resultsDiv.appendChild(div);
-  });
-}
+    if (!Array.isArray(data)) {
+      resultsDiv.innerHTML = '<p>No results yet. Submit some URLs first.</p>';
+      return;
+    }
+  
+    resultsDiv.innerHTML = '';
+    data.forEach(item => {
+      const div = document.createElement('div');
+      div.classList.add('result');
+      const statusClass = item.up ? 'status-up' : 'status-down';
+      div.innerHTML = `
+        <div><strong>${item.url}</strong></div>
+        <div>Latency: ${item.latency.toFixed(2)} ms</div>
+        <div>Status: <span class="${statusClass}">${item.up ? 'UP' : 'DOWN'}</span></div>
+      `;
+      resultsDiv.appendChild(div);
+    });
+  }
+  
