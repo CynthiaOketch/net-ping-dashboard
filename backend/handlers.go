@@ -36,5 +36,9 @@ func handlePing(w http.ResponseWriter, r *http.Request) {
 
 func handleResults(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	if latestResults == nil {
+		json.NewEncoder(w).Encode([]PingResult{}) // send empty array
+		return
+	}
 	json.NewEncoder(w).Encode(latestResults)
 }
